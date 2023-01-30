@@ -25,7 +25,7 @@ export const getDocuments = async (): Promise<Array<Documents>> => {
   return [document1, document2];
 };
 
-class Version {
+export class Version {
   attribute: Map<string, string>;
 
   constructor(attribute: Map<string, string>) {
@@ -33,7 +33,7 @@ class Version {
   }
 }
 
-class Documents {
+export class Documents {
   documents: Array<Version>;
 
   constructor(document: Array<Version>) {
