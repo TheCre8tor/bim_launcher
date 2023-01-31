@@ -1,18 +1,25 @@
 import { Documents, getDocuments, Version } from "./external_service";
 
-makeCall();
+main();
 
-async function makeCall(): Promise<void> {
-  // 1. Continously runs, make http request to an API endpoint so that it will detect chages of documents
+async function main(): Promise<void> {
+  // 2b. scalling ->
+  const response = generateDocuments();
+  const documents = transformDocument((await response.next()).value);
+  await saveDocument(documents);
+}
+
+async function* generateDocuments(): AsyncGenerator<Documents> {
   let response = await getDocuments();
 
-  // 2a. call another api to write to ->
-  // 2b. scalling ->
-  for (let document of response) {
-    // 3. Transform the data from one platform to another
-    let transformedDocument = transformDocument(document);
-    saveDocument(transformedDocument);
+  let documents: Documents = [];
+  let INDEX = 0;
+
+  for (INDEX; INDEX <= response.length - 1; INDEX++) {
+    documents.push(...response[INDEX]);
   }
+
+  yield await Promise.resolve(documents);
 }
 
 async function saveDocument(document: Documents) {

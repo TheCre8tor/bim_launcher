@@ -19,8 +19,8 @@ export const getDocuments = async (): Promise<Array<Documents>> => {
   let version2: Version = attribute1;
   let version3: Version = attribute3;
 
-  let document1: Array<Version> = [version1, version2];
-  let document2: Array<Version> = [version3];
+  let document1: Documents = [version1, version2];
+  let document2: Documents = [version3];
 
   return [document1, document2];
 };
