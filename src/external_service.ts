@@ -1,4 +1,4 @@
-export const getDocuments = async (): Promise<Array<Documents>> => {
+export async function* getDocuments(): AsyncGenerator<Documents> {
   let attribute1 = new Map<string, string>();
   let attribute2 = new Map<string, string>();
   let attribute3 = new Map<string, string>();
@@ -16,14 +16,15 @@ export const getDocuments = async (): Promise<Array<Documents>> => {
   attribute3.set("version", "V1");
 
   let version1: Version = attribute1;
-  let version2: Version = attribute1;
+  let version2: Version = attribute2;
   let version3: Version = attribute3;
 
   let document1: Documents = [version1, version2];
   let document2: Documents = [version3];
 
-  return [document1, document2];
-};
+  yield document1;
+  yield document2;
+}
 
 export type Version = Map<string, string>;
 export type Documents = Array<Version>;
