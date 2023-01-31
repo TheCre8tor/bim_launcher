@@ -25,8 +25,6 @@ const external_service_1 = require("./external_service");
 main();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        // 1. Continously runs, make http request to an API endpoint so that it will detect chages of documents
-        // 2a. call another api to write to ->
         // 2b. scalling ->
         const response = generateDocuments();
         const documents = transformDocument((yield response.next()).value);
