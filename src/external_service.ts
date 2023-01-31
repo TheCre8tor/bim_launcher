@@ -15,9 +15,9 @@ export const getDocuments = async (): Promise<Array<Documents>> => {
   attribute3.set("role", "A");
   attribute3.set("version", "V1");
 
-  let version1 = new Version(attribute1);
-  let version2 = new Version(attribute1);
-  let version3 = new Version(attribute3);
+  let version1: Version = attribute1;
+  let version2: Version = attribute1;
+  let version3: Version = attribute3;
 
   let document1 = new Documents([version1, version2]);
   let document2 = new Documents([version3]);
@@ -25,13 +25,7 @@ export const getDocuments = async (): Promise<Array<Documents>> => {
   return [document1, document2];
 };
 
-export class Version {
-  attribute: Map<string, string>;
-
-  constructor(attribute: Map<string, string>) {
-    this.attribute = attribute;
-  }
-}
+export type Version = Map<string, string>;
 
 export class Documents {
   documents: Array<Version>;
