@@ -19,18 +19,11 @@ export const getDocuments = async (): Promise<Array<Documents>> => {
   let version2: Version = attribute1;
   let version3: Version = attribute3;
 
-  let document1 = new Documents([version1, version2]);
-  let document2 = new Documents([version3]);
+  let document1: Array<Version> = [version1, version2];
+  let document2: Array<Version> = [version3];
 
   return [document1, document2];
 };
 
 export type Version = Map<string, string>;
-
-export class Documents {
-  documents: Array<Version>;
-
-  constructor(document: Array<Version>) {
-    this.documents = document;
-  }
-}
+export type Documents = Array<Version>;
