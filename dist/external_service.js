@@ -25,7 +25,7 @@ exports.getDocuments = void 0;
 function getDocuments() {
     return __asyncGenerator(this, arguments, function* getDocuments_1() {
         const PER_PAGE = 2;
-        const PAGE = 2;
+        const PAGE = 1;
         let response = yield __await(getDocmuentPaged(PER_PAGE, PAGE));
         for (let document of response) {
             yield yield __await(document);
@@ -71,12 +71,13 @@ function getDocmuentPaged(perPage, page) {
         if (page < 1)
             page = 1;
         // Should in case if page is greater than totalPages,
-        //
+        // return the last page data to the caller
         if (page > totalPages)
             page = totalPages;
         let INDEX = (page - 1) * perPage;
+        let PAGE_INDEX = page * perPage;
         let documents = [];
-        for (INDEX; INDEX < page * perPage && INDEX < data.length; INDEX++) {
+        for (INDEX; INDEX < PAGE_INDEX && INDEX < data.length; INDEX++) {
             documents.push(data[INDEX]);
         }
         return documents;

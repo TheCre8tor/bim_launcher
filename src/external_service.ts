@@ -1,6 +1,6 @@
 export async function* getDocuments(): AsyncGenerator<Documents> {
   const PER_PAGE = 2;
-  const PAGE = 2;
+  const PAGE = 1;
 
   let response = await getDocmuentPaged(PER_PAGE, PAGE);
 
@@ -60,13 +60,14 @@ async function getDocmuentPaged(
   // If page is less than 1, I assigned a default value of 1 to it.
   if (page < 1) page = 1;
   // Should in case if page is greater than totalPages,
-  //
+  // return the last page data to the caller
   if (page > totalPages) page = totalPages;
 
   let INDEX = (page - 1) * perPage;
+  let PAGE_INDEX = page * perPage;
   let documents = [];
 
-  for (INDEX; INDEX < page * perPage && INDEX < data.length; INDEX++) {
+  for (INDEX; INDEX < PAGE_INDEX && INDEX < data.length; INDEX++) {
     documents.push(data[INDEX]);
   }
 
