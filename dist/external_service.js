@@ -24,12 +24,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDocuments = void 0;
 function getDocuments() {
     return __asyncGenerator(this, arguments, function* getDocuments_1() {
-        const PER_PAGE = 2;
-        const PAGE = 1;
-        let INDEX = 0;
+        const PER_PAGE = 1;
+        const PAGE = 6;
         let response = yield __await(getDocmuentPaged(PER_PAGE, PAGE));
-        for (INDEX; INDEX <= PER_PAGE - 1; INDEX++) {
-            yield yield __await(response[INDEX]);
+        for (let document of response) {
+            yield yield __await(document);
         }
     });
 }
@@ -43,20 +42,50 @@ function getDocmuentPaged(perPage, page) {
         let attribute1 = new Map();
         let attribute2 = new Map();
         let attribute3 = new Map();
+        let attribute4 = new Map();
         attribute1.set("name", "BREEZ-MJT-GH-B1-DR-A-0001.pdf");
         attribute1.set("role", "A");
         attribute1.set("version", "V1");
-        attribute2.set("name", "BREEZ-MJT-GH-GF-DR-A-0001.pdf");
+        attribute2.set("name", "BREEZ-MJT-GH-GF-DR-A-0002.pdf");
         attribute2.set("role", "A");
         attribute2.set("version", "V2");
-        attribute3.set("name", "BREEZ-MJT-ZZ-01-DR-0002.pdf");
+        attribute3.set("name", "BREEZ-MJT-ZZ-01-DR-0003.pdf");
         attribute3.set("role", "A");
         attribute3.set("version", "V1");
+        attribute4.set("name", "BREEZ-MJT-ZZ-01-DR-0004.pdf");
+        attribute4.set("role", "A");
+        attribute4.set("version", "V1");
         let version1 = attribute1;
         let version2 = attribute2;
         let version3 = attribute3;
-        let document1 = [version1, version2];
-        let document2 = [version3];
-        return [document1, document2];
+        let version4 = attribute4;
+        let document1 = [version1];
+        let document2 = [version2];
+        let document3 = [version3];
+        let document4 = [version4];
+        let data = [document1, document2, document3, document4];
+        let totalPages = Math.ceil(data.length / perPage);
+        if (page < 1)
+            page = 1;
+        if (page > totalPages)
+            page = totalPages;
+        let INDEX = (page - 1) * perPage;
+        let documents = [];
+        for (INDEX; INDEX < page * perPage && INDEX < data.length; INDEX++) {
+            documents.push(data[INDEX]);
+        }
+        return documents;
     });
 }
+// data - total data length
+// offset - page
+// limit - per_page
+/*
+The total number of the database data really matters
+- If the total data in the database is 100
+- and I specify limit to 10 and offset to 0
+- the data that should be returned should start from 1 - 10
+
+- if I specify limit to 10 and offset to 1
+- the data that should be returned should start from 11 - 20
+*/

@@ -23,9 +23,6 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // 2b. scalling ->
-            // const response = generateDocuments();
-            // const documents = transformDocument((await response.next()).value);
-            // await saveDocument(documents);
             for (var _d = true, _e = __asyncValues((0, external_service_1.getDocuments)()), _f; _f = yield _e.next(), _a = _f.done, !_a;) {
                 _c = _f.value;
                 _d = false;
@@ -48,15 +45,6 @@ function main() {
         }
     });
 }
-// async function* generateDocuments(): AsyncGenerator<Documents> {
-//   let response = await getDocuments();
-//   let documents: Documents = [];
-//   let INDEX = 0;
-//   for (INDEX; INDEX <= response.length - 1; INDEX++) {
-//     documents.push(...response[INDEX]);
-//   }
-//   yield await Promise.resolve(documents);
-// }
 function saveDocument(document) {
     return __awaiter(this, void 0, void 0, function* () {
         for (let version of document) {
