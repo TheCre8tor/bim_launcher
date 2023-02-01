@@ -25,7 +25,7 @@ exports.getDocuments = void 0;
 function getDocuments() {
     return __asyncGenerator(this, arguments, function* getDocuments_1() {
         const PER_PAGE = 2;
-        const PAGE = 1;
+        const PAGE = 2;
         let response = yield __await(getDocmuentPaged(PER_PAGE, PAGE));
         for (let document of response) {
             yield yield __await(document);
@@ -42,21 +42,44 @@ function getDocmuentPaged(perPage, page) {
         let attribute1 = new Map();
         let attribute2 = new Map();
         let attribute3 = new Map();
+        let attribute4 = new Map();
         attribute1.set("name", "BREEZ-MJT-GH-B1-DR-A-0001.pdf");
         attribute1.set("role", "A");
         attribute1.set("version", "V1");
-        attribute2.set("name", "BREEZ-MJT-GH-GF-DR-A-0001.pdf");
+        attribute2.set("name", "BREEZ-MJT-GH-GF-DR-A-0002.pdf");
         attribute2.set("role", "A");
         attribute2.set("version", "V2");
-        attribute3.set("name", "BREEZ-MJT-ZZ-01-DR-0002.pdf");
+        attribute3.set("name", "BREEZ-MJT-ZZ-01-DR-0003.pdf");
         attribute3.set("role", "A");
         attribute3.set("version", "V1");
+        attribute4.set("name", "BREEZ-MJT-ZZ-01-DR-0004.pdf");
+        attribute4.set("role", "A");
+        attribute4.set("version", "V1");
         let version1 = attribute1;
         let version2 = attribute2;
         let version3 = attribute3;
-        let document1 = [version1, version2];
-        let document2 = [version3];
-        return [document1, document2];
+        let version4 = attribute4;
+        let document1 = [version1];
+        let document2 = [version2];
+        let document3 = [version3];
+        let document4 = [version4];
+        let data = [document1, document2, document3, document4];
+        // I get the total number of the page by dividing
+        // the length of the data by perPage
+        let totalPages = Math.ceil(data.length / perPage);
+        // If page is less than 1, I assigned a default value of 1 to it.
+        if (page < 1)
+            page = 1;
+        // Should in case if page is greater than totalPages,
+        //
+        if (page > totalPages)
+            page = totalPages;
+        let INDEX = (page - 1) * perPage;
+        let documents = [];
+        for (INDEX; INDEX < page * perPage && INDEX < data.length; INDEX++) {
+            documents.push(data[INDEX]);
+        }
+        return documents;
     });
 }
 // data - total data length
