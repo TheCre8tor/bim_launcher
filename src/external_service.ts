@@ -45,17 +45,3 @@ async function getDocmuentPaged(
 
   return [document1, document2];
 }
-
-// data - total data length
-// offset - page
-// limit - per_page
-
-/* 
-The total number of the database data really matters
-- If the total data in the database is 100
-- and I specify limit to 10 and offset to 0
-- the data that should be returned should start from 1 - 10
-
-- if I specify limit to 10 and offset to 1
-- the data that should be returned should start from 11 - 20
-*/
