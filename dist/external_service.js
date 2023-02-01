@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __await = (this && this.__await) || function (v) { return this instanceof __await ? (this.v = v, this) : new __await(v); }
 var __asyncGenerator = (this && this.__asyncGenerator) || function (thisArg, _arguments, generator) {
     if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
@@ -15,6 +24,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDocuments = void 0;
 function getDocuments() {
     return __asyncGenerator(this, arguments, function* getDocuments_1() {
+        const PER_PAGE = 2;
+        const PAGE = 1;
+        let INDEX = 0;
+        let response = yield __await(getDocmuentPaged(PER_PAGE, PAGE));
+        for (INDEX; INDEX <= PER_PAGE - 1; INDEX++) {
+            yield yield __await(response[INDEX]);
+        }
+    });
+}
+exports.getDocuments = getDocuments;
+/**
+ * @param {number} perPage - number of documents in one page
+ * @param {number} page - the page order to get, first page is 1
+ */
+function getDocmuentPaged(perPage, page) {
+    return __awaiter(this, void 0, void 0, function* () {
         let attribute1 = new Map();
         let attribute2 = new Map();
         let attribute3 = new Map();
@@ -32,8 +57,6 @@ function getDocuments() {
         let version3 = attribute3;
         let document1 = [version1, version2];
         let document2 = [version3];
-        yield yield __await(document1);
-        yield yield __await(document2);
+        return [document1, document2];
     });
 }
-exports.getDocuments = getDocuments;

@@ -1,4 +1,25 @@
 export async function* getDocuments(): AsyncGenerator<Documents> {
+  const PER_PAGE = 2;
+  const PAGE = 1;
+
+  let response = await getDocmuentPaged(PER_PAGE, PAGE);
+
+  for (let document of response) {
+    yield document;
+  }
+}
+
+export type Version = Map<string, string>;
+export type Documents = Array<Version>;
+
+/**
+ * @param {number} perPage - number of documents in one page
+ * @param {number} page - the page order to get, first page is 1
+ */
+async function getDocmuentPaged(
+  perPage: number,
+  page: number
+): Promise<Array<Documents>> {
   let attribute1 = new Map<string, string>();
   let attribute2 = new Map<string, string>();
   let attribute3 = new Map<string, string>();
@@ -22,9 +43,5 @@ export async function* getDocuments(): AsyncGenerator<Documents> {
   let document1: Documents = [version1, version2];
   let document2: Documents = [version3];
 
-  yield document1;
-  yield document2;
+  return [document1, document2];
 }
-
-export type Version = Map<string, string>;
-export type Documents = Array<Version>;
