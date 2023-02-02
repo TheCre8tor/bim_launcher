@@ -47,10 +47,7 @@ function main() {
 }
 function saveDocument(document) {
     return __awaiter(this, void 0, void 0, function* () {
-        for (let version of document) {
-            saveVersion(version);
-        }
-        console.log("Saved document");
+        console.debug(`Saved document: ${document.name}`);
     });
 }
 function saveVersion(version) {
@@ -59,6 +56,6 @@ function saveVersion(version) {
     });
 }
 function transformDocument(document) {
-    console.log(`Transformed ${document}`);
+    console.debug(`Transformed ${document.name}`);
     return document;
 }
