@@ -47,37 +47,10 @@ async function getDocmuentPaged(
 ): Promise<Array<Document>> {
   let data = generateMultipleDocuments(100);
 
-  // I get the total number of the page by dividing
-  // the length of the data by perPage
-  let totalPages = Math.ceil(data.length / perPage);
+  let START = (page - 1) * perPage;
+  let END = page * perPage;
 
-  // If page is less than 1, I assigned a default value of 1 to it.
-  if (page < 1) page = 1;
-  // Should in case if page is greater than totalPages,
-  // return the last page data to the caller
-  if (page > totalPages) page = totalPages;
-
-  let INDEX = (page - 1) * perPage;
-  let PAGE_INDEX = page * perPage;
-  let documents = [];
-
-  for (INDEX; INDEX < PAGE_INDEX && INDEX < data.length; INDEX++) {
-    documents.push(data[INDEX]);
-  }
+  let documents = data.slice(START, END);
 
   return documents;
 }
-
-// data - total data length
-// offset - page
-// limit - per_page
-
-/* 
-The total number of the database data really matters
-- If the total data in the database is 100
-- and I specify limit to 10 and offset to 0
-- the data that should be returned should start from 1 - 10
-
-- if I specify limit to 10 and offset to 1
-- the data that should be returned should start from 11 - 20
-*/
