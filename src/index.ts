@@ -1,4 +1,4 @@
-import { Documents, getDocuments, Version, Document } from "./external_service";
+import { getDocuments, Version, Document } from "./external_service";
 
 main();
 
