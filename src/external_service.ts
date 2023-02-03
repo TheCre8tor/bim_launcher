@@ -9,33 +9,34 @@ export async function* getDocuments(): AsyncGenerator<Document> {
   }
 }
 
-export class Document {
+export type Document = {
   name: string;
-  version = [
-    { version: "V1", role: "A" },
-    { version: "V1", role: "A" },
-    { version: "V2", role: "A" },
-    { version: "V", role: "A" },
-  ];
+  version: Array<{ version: string; role: string }>;
+};
 
-  constructor(name: string) {
-    this.name = name;
-  }
+function Document(name: string): Document {
+  return {
+    name,
+    version: [
+      { version: "V1", role: "A" },
+      { version: "V1", role: "A" },
+      { version: "V2", role: "A" },
+      { version: "V", role: "A" },
+    ],
+  };
 }
 
-function generateMultipleDocuments(count: number): Document[] {
-  let documents: Document[] = [];
+function range(start: number, end: number): Array<number> {
+  return Array.from({ length: end - start + 1 }, (_, idx) => idx + start);
+}
 
-  for (let i = 1; i <= count; i++) {
-    let documentName = `BREEZ-MJT-GH-B1-DR-A-0${i}.pdf`;
-    documents.push(new Document(documentName));
-  }
-
-  return documents;
+function generateMultipleDocuments(count: number): Array<Document> {
+  return range(1, count).map((idx) =>
+    Document(`BREEZ-MJT-GH-B1-DR-A-0${idx}.pdf`)
+  );
 }
 
 export type Version = Map<string, string>;
-export type Documents = Array<Version>;
 
 /**
  * @param {number} perPage - number of documents in one page

@@ -21,11 +21,11 @@ var __asyncGenerator = (this && this.__asyncGenerator) || function (thisArg, _ar
     function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Document = exports.getDocuments = void 0;
+exports.getDocuments = void 0;
 function getDocuments() {
     return __asyncGenerator(this, arguments, function* getDocuments_1() {
         const PER_PAGE = 10;
-        const PAGE = 1;
+        const PAGE = 10;
         let response = yield __await(getDocmuentPaged(PER_PAGE, PAGE));
         for (let document of response) {
             yield yield __await(document);
@@ -33,25 +33,22 @@ function getDocuments() {
     });
 }
 exports.getDocuments = getDocuments;
-class Document {
-    constructor(name) {
-        this.version = [
+function Document(name) {
+    return {
+        name,
+        version: [
             { version: "V1", role: "A" },
             { version: "V1", role: "A" },
             { version: "V2", role: "A" },
             { version: "V", role: "A" },
-        ];
-        this.name = name;
-    }
+        ],
+    };
 }
-exports.Document = Document;
+function range(start, end) {
+    return Array.from({ length: end - start + 1 }, (_, idx) => idx + start);
+}
 function generateMultipleDocuments(count) {
-    let documents = [];
-    for (let i = 1; i <= count; i++) {
-        let documentName = `BREEZ-MJT-GH-B1-DR-A-0${i}.pdf`;
-        documents.push(new Document(documentName));
-    }
-    return documents;
+    return range(1, count).map((idx) => Document(`BREEZ-MJT-GH-B1-DR-A-0${idx}.pdf`));
 }
 /**
  * @param {number} perPage - number of documents in one page
