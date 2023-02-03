@@ -1,5 +1,5 @@
-export async function* getDocuments(): AsyncGenerator<Documents> {
-  const PER_PAGE = 2;
+export async function* getDocuments(): AsyncGenerator<Document> {
+  const PER_PAGE = 10;
   const PAGE = 1;
 
   let response = await getDocmuentPaged(PER_PAGE, PAGE);
@@ -9,8 +9,34 @@ export async function* getDocuments(): AsyncGenerator<Documents> {
   }
 }
 
+export type Document = {
+  name: string;
+  version: Array<{ version: string; role: string }>;
+};
+
+function Document(name: string): Document {
+  return {
+    name,
+    version: [
+      { version: "V1", role: "A" },
+      { version: "V1", role: "A" },
+      { version: "V2", role: "A" },
+      { version: "V", role: "A" },
+    ],
+  };
+}
+
+function range(start: number, end: number): Array<number> {
+  return Array.from({ length: end - start + 1 }, (_, idx) => idx + start);
+}
+
+function generateMultipleDocuments(count: number): Array<Document> {
+  return range(1, count).map((idx) =>
+    Document(`BREEZ-MJT-GH-B1-DR-A-0${idx}.pdf`)
+  );
+}
+
 export type Version = Map<string, string>;
-export type Documents = Array<Version>;
 
 /**
  * @param {number} perPage - number of documents in one page
@@ -19,29 +45,13 @@ export type Documents = Array<Version>;
 async function getDocmuentPaged(
   perPage: number,
   page: number
-): Promise<Array<Documents>> {
-  let attribute1 = new Map<string, string>();
-  let attribute2 = new Map<string, string>();
-  let attribute3 = new Map<string, string>();
+): Promise<Array<Document>> {
+  let data = generateMultipleDocuments(100);
 
-  attribute1.set("name", "BREEZ-MJT-GH-B1-DR-A-0001.pdf");
-  attribute1.set("role", "A");
-  attribute1.set("version", "V1");
+  let START = (page - 1) * perPage;
+  let END = page * perPage;
 
-  attribute2.set("name", "BREEZ-MJT-GH-GF-DR-A-0001.pdf");
-  attribute2.set("role", "A");
-  attribute2.set("version", "V2");
+  let documents = data.slice(START, END);
 
-  attribute3.set("name", "BREEZ-MJT-ZZ-01-DR-0002.pdf");
-  attribute3.set("role", "A");
-  attribute3.set("version", "V1");
-
-  let version1: Version = attribute1;
-  let version2: Version = attribute2;
-  let version3: Version = attribute3;
-
-  let document1: Documents = [version1, version2];
-  let document2: Documents = [version3];
-
-  return [document1, document2];
+  return documents;
 }

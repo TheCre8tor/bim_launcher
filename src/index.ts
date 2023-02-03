@@ -1,4 +1,4 @@
-import { Documents, getDocuments, Version } from "./external_service";
+import { getDocuments, Version, Document } from "./external_service";
 
 main();
 
@@ -10,18 +10,15 @@ async function main(): Promise<void> {
   }
 }
 
-async function saveDocument(document: Documents) {
-  for (let version of document) {
-    saveVersion(version);
-  }
-  console.log("Saved document");
+async function saveDocument(document: Document) {
+  console.debug(`Saved document: ${document.name}`);
 }
 
 async function saveVersion(version: Version) {
   console.debug(version);
 }
 
-function transformDocument(document: Documents): Documents {
-  console.log(`Transformed ${document}`);
+function transformDocument(document: Document): Document {
+  console.debug(`Transformed ${document.name}`);
   return document;
 }
